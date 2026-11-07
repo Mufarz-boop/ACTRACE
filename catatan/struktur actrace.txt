@@ -1,0 +1,80 @@
+ACTRACE/
+│
+├── venv/                       # Virtual environment Python
+│
+├── app/
+│   ├── __init__.py
+│   ├── db.py
+│   │
+│   ├── auth/
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   │
+│   ├── student/
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   │
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   │   └── authentication.py
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── journal_service.py
+│   │   ├── photo_service.py
+│   │   └── pdf_service.py
+│   │
+│   └── utils/
+│       ├── __init__.py
+│       ├── decorators.py
+│       └── helpers.py
+│
+├── templates/
+│   ├── auth/
+│   │   └── login.html
+│   │
+│   ├── student/
+│   │   ├── base_student.html
+│   │   ├── dashboard.html
+│   │   ├── journals.html
+│   │   ├── add_journal.html
+│   │   ├── edit_journal.html
+│   │   ├── detail_journal.html
+│   │   ├── history.html
+│   │   ├── gallery.html
+│   │   ├── reports.html
+│   │   ├── profile.html
+│   │   └── settings.html
+│   │
+│   └── errors/
+│       ├── 403.html
+│       ├── 404.html
+│       └── 500.html
+│
+├── static/
+│   ├── css/
+│   │   ├── style.css
+│   │   ├── auth.css
+│   │   └── student.css
+│   │
+│   ├── js/
+│   │   ├── main.js
+│   │   ├── journal.js
+│   │   └── gallery.js
+│   │
+│   └── img/
+│
+├── instance/
+│   └── uploads/
+│       └── journal_photos/
+│
+├── database/
+│   └── schema.sql
+│
+├── config.py
+├── run.py
+├── requirements.txt
+├── .env
+├── .env.example
+└── .gitignore

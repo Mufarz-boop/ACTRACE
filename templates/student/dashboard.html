@@ -1,0 +1,367 @@
+{% extends "student/base_student.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADING -->
+<section class="welcome-section">
+
+    <div class="welcome-section__text">
+
+        <span class="section-eyebrow">
+            OVERVIEW
+        </span>
+
+        <h1>
+            Welcome back,
+            <span>{{ session.get('full_name', 'Student') }}</span>
+        </h1>
+
+        <p>
+            Pantau perjalanan PKL-mu dan dokumentasikan
+            setiap pengalaman melalui ACTRACE.
+        </p>
+
+    </div>
+
+
+    <div class="welcome-date">
+
+        <svg class="icon" aria-hidden="true">
+            <use href="#icon-calendar"></use>
+        </svg>
+
+        <span id="current-date">Memuat tanggal...</span>
+
+    </div>
+
+</section>
+
+
+<!-- STATISTICS -->
+<section class="stats-grid" aria-label="Ringkasan aktivitas">
+
+    <article class="stat-card stat-card--primary">
+
+        <div class="stat-card__top">
+
+            <div class="stat-card__icon">
+                <svg class="icon" aria-hidden="true">
+                    <use href="#icon-journal"></use>
+                </svg>
+            </div>
+
+            <span class="stat-card__label">
+                TOTAL JOURNALS
+            </span>
+
+        </div>
+
+
+        <div class="stat-card__body">
+
+            <h2>{{ total_journals|default(0) }}</h2>
+
+            <p>
+                Jurnal aktivitas tersimpan
+            </p>
+
+        </div>
+
+
+        <div class="stat-card__footer">
+            <span>Personal activity records</span>
+        </div>
+
+    </article>
+
+
+    <article class="stat-card">
+
+        <div class="stat-card__top">
+
+            <div class="stat-card__icon stat-card__icon--teal">
+                <svg class="icon" aria-hidden="true">
+                    <use href="#icon-clock"></use>
+                </svg>
+            </div>
+
+            <span class="stat-card__label">
+                LATEST ACTIVITY
+            </span>
+
+        </div>
+
+
+        <div class="stat-card__body">
+
+            {% if latest_activity %}
+
+                <h2 class="stat-card__latest">
+                    {{ latest_activity.activity_date.strftime('%d-%m-%Y') }}
+                </h2>
+
+                <p class="stat-card__activity-title">
+                    {{ latest_activity.title }}
+                </p>
+
+            {% else %}
+
+                <h2 class="stat-card__latest">
+                    Belum ada
+                </h2>
+
+                <p>
+                    Aktivitas belum dicatat.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="stat-card__footer">
+            <span>Most recent journal entry</span>
+        </div>
+
+    </article>
+
+</section>
+
+
+<!-- MAIN DASHBOARD GRID -->
+<section class="dashboard-grid">
+
+    <!-- JOURNAL OVERVIEW -->
+    <article class="panel journal-panel">
+
+        <div class="panel__header">
+
+            <div>
+                <span class="section-eyebrow">
+                    YOUR RECORDS
+                </span>
+
+                <h2>Journal Overview</h2>
+
+                <p>
+                    Ringkasan dokumentasi aktivitas PKL-mu.
+                </p>
+            </div>
+
+
+            <a
+                href="{{ url_for('student.journals') }}"
+                class="text-link"
+            >
+                View all
+
+                <svg class="icon" aria-hidden="true">
+                    <use href="#icon-arrow"></use>
+                </svg>
+            </a>
+
+        </div>
+
+
+        {% if latest_activity %}
+
+            <div class="latest-journal">
+
+                <div class="latest-journal__icon">
+                    <svg class="icon" aria-hidden="true">
+                        <use href="#icon-book"></use>
+                    </svg>
+                </div>
+
+
+                <div class="latest-journal__content">
+
+                    <span class="latest-journal__date">
+                        {{ latest_activity.activity_date.strftime('%d-%m-%Y') }}
+                    </span>
+
+                    <h3>
+                        {{ latest_activity.title }}
+                    </h3>
+
+                    <p>
+                        Aktivitas terakhir yang tercatat
+                        dalam jurnalmu.
+                    </p>
+
+                </div>
+
+
+                <span class="journal-status">
+                    Recorded
+                </span>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-state__icon">
+                    <svg class="icon" aria-hidden="true">
+                        <use href="#icon-journal"></use>
+                    </svg>
+                </div>
+
+                <h3>Belum ada jurnal aktivitas</h3>
+
+                <p>
+                    Riwayat aktivitasmu akan ditampilkan
+                    di sini setelah kamu memiliki jurnal.
+                </p>
+
+                <a
+                    href="{{ url_for('student.journals') }}"
+                    class="button button--secondary"
+                >
+                    Buka My Journals
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </article>
+
+
+    <!-- QUICK ACCESS -->
+    <article class="panel quick-panel">
+
+        <div class="panel__header">
+
+            <div>
+                <span class="section-eyebrow">
+                    QUICK ACCESS
+                </span>
+
+                <h2>Workspace</h2>
+
+                <p>
+                    Akses fitur ACTRACE.
+                </p>
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('student.journals') }}"
+            class="quick-link"
+        >
+
+            <div class="quick-link__icon">
+                <svg class="icon" aria-hidden="true">
+                    <use href="#icon-journal"></use>
+                </svg>
+            </div>
+
+            <div class="quick-link__text">
+                <strong>My Journals</strong>
+                <span>Lihat seluruh catatan aktivitas.</span>
+            </div>
+
+            <svg class="icon quick-link__arrow" aria-hidden="true">
+                <use href="#icon-arrow"></use>
+            </svg>
+
+        </a>
+
+
+        <div class="quick-link quick-link--disabled"
+             aria-disabled="true">
+
+            <div class="quick-link__icon">
+                <svg class="icon" aria-hidden="true">
+                    <use href="#icon-chart"></use>
+                </svg>
+            </div>
+
+            <div class="quick-link__text">
+                <strong>Activity Reports</strong>
+                <span>Fitur laporan akan tersedia nanti.</span>
+            </div>
+
+            <span class="coming-soon">Soon</span>
+
+        </div>
+
+
+        <div class="quick-link quick-link--disabled"
+             aria-disabled="true">
+
+            <div class="quick-link__icon">
+                <svg class="icon" aria-hidden="true">
+                    <use href="#icon-user"></use>
+                </svg>
+            </div>
+
+            <div class="quick-link__text">
+                <strong>My Profile</strong>
+                <span>Kelola informasi akunmu.</span>
+            </div>
+
+            <span class="coming-soon">Soon</span>
+
+        </div>
+
+    </article>
+
+</section>
+
+
+<!-- INFORMATION BANNER -->
+<section class="info-banner">
+
+    <div class="info-banner__symbol">
+        <svg class="icon" aria-hidden="true">
+            <use href="#icon-book"></use>
+        </svg>
+    </div>
+
+
+    <div class="info-banner__content">
+
+        <h2>Every Activity Leaves a Trace.</h2>
+
+        <p>
+            Setiap pengalaman memiliki nilai.
+            Catat aktivitasmu, dokumentasikan prosesnya,
+            dan simpan perjalanan PKL-mu dengan teratur.
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dateElement = document.getElementById("current-date");
+
+        if (!dateElement) return;
+
+        const now = new Date();
+
+        const formattedDate = new Intl.DateTimeFormat("id-ID", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }).format(now);
+
+        dateElement.textContent = formattedDate;
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#142D4E">
+
+    <title>Sign In | ACTRACE</title>
+
+    <meta
+        name="description"
+        content="Sign in to ACTRACE, the student internship activity journal."
+    >
+
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="{{ url_for('static', filename='img/favicon.svg') }}"
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/auth.css') }}"
+    >
+</head>
+
+<body class="auth-body">
+
+    <!-- SVG ICON SPRITE -->
+    <svg
+        class="svg-sprite"
+        aria-hidden="true"
+        focusable="false"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+
+        <symbol id="i-mark" viewBox="0 0 40 40">
+            <rect width="40" height="40" rx="10" fill="#247C83"/>
+            <path
+                d="M10 27 L17 19 L22 23 L30 12"
+                fill="none"
+                stroke="#FFFFFF"
+                stroke-width="2.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <circle cx="30" cy="12" r="3.4" fill="#E8A64A"/>
+        </symbol>
+
+        <symbol id="i-user" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-3.6 3.6-6 8-6s8 2.4 8 6"/>
+        </symbol>
+
+        <symbol id="i-lock" viewBox="0 0 24 24">
+            <rect x="4" y="11" width="16" height="10" rx="2.5"/>
+            <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+        </symbol>
+
+        <symbol id="i-eye" viewBox="0 0 24 24">
+            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/>
+            <circle cx="12" cy="12" r="3"/>
+        </symbol>
+
+        <symbol id="i-eye-off" viewBox="0 0 24 24">
+            <path d="M9.9 5.2A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.1 6.7C3.4 8.5 2 12 2 12s3.6 7 10 7c1.8 0 3.4-.5 4.8-1.2"/>
+            <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>
+            <path d="M3 3l18 18"/>
+        </symbol>
+
+        <symbol id="i-alert" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7.5v5.5M12 16.5h.01"/>
+        </symbol>
+
+    </svg>
+
+
+    <div class="auth-layout">
+
+        <!-- BRAND SECTION -->
+        <aside class="brand" aria-label="About ACTRACE">
+
+            <div class="brand__inner">
+
+                <a
+                    class="brand__logo"
+                    href="{{ url_for('auth.login') }}"
+                    aria-label="ACTRACE home"
+                >
+
+                    <svg
+                        class="brand__mark"
+                        width="40"
+                        height="40"
+                        aria-hidden="true"
+                        focusable="false"
+                    >
+                        <use href="#i-mark"></use>
+                    </svg>
+
+                    <span class="brand__name">ACTRACE</span>
+
+                </a>
+
+
+                <div class="brand__copy">
+
+                    <p class="brand__tagline">
+                        Every Activity Leaves a Trace.
+                    </p>
+
+                    <p class="brand__intro">
+                        Document your journey, track your progress,
+                        and turn every internship experience into
+                        meaningful growth.
+                    </p>
+
+                </div>
+
+
+                <img
+                    class="brand__visual"
+                    src="{{ url_for('static', filename='img/auth-trace.svg') }}"
+                    alt=""
+                    width="440"
+                    height="400"
+                    aria-hidden="true"
+                    decoding="async"
+                >
+
+            </div>
+
+        </aside>
+
+
+        <!-- AUTHENTICATION SECTION -->
+        <div class="auth">
+
+            <main class="auth__center" id="main">
+
+                <section
+                    class="auth-card"
+                    aria-labelledby="auth-title"
+                >
+
+                    <!-- HEADER -->
+                    <header class="auth-card__header">
+
+                        <h1
+                            class="auth-card__title"
+                            id="auth-title"
+                        >
+                            Welcome Back
+                        </h1>
+
+                        <p class="auth-card__subtitle">
+                            Sign in to continue your internship journey.
+                        </p>
+
+                    </header>
+
+
+                    <!-- FLASH MESSAGES -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+
+                        {% if messages %}
+
+                            <div
+                                class="alert-stack"
+                                role="status"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
+
+                                {% for category, message in messages %}
+
+                                    <div
+                                        class="alert alert--{{ category if category in ('error', 'success') else 'info' }}"
+                                    >
+
+                                        <svg
+                                            class="icon alert__icon"
+                                            aria-hidden="true"
+                                            focusable="false"
+                                        >
+                                            <use href="#i-alert"></use>
+                                        </svg>
+
+                                        <p class="alert__text">
+                                            {{ message }}
+                                        </p>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+                    {% endwith %}
+
+
+                    <!-- LOGIN FORM -->
+                    <form
+                        class="form"
+                        method="POST"
+                        action="{{ url_for('auth.login') }}"
+                        autocomplete="on"
+                        data-loading-form
+                    >
+
+                        <!-- CSRF PROTECTION -->
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
+
+                        <!-- IDENTITY FIELD -->
+                        <div class="field">
+
+                            <label
+                                class="field__label"
+                                for="identity"
+                            >
+                                Username or Email
+                            </label>
+
+
+                            <div class="field__control">
+
+                                <svg
+                                    class="icon field__icon"
+                                    aria-hidden="true"
+                                    focusable="false"
+                                >
+                                    <use href="#i-user"></use>
+                                </svg>
+
+
+                                <input
+                                    class="field__input"
+                                    type="text"
+                                    id="identity"
+                                    name="identity"
+
+                                    value="{{ request.form.get('identity', '') }}"
+
+                                    placeholder="Enter your username or email"
+
+                                    autocomplete="username"
+                                    autocapitalize="none"
+                                    autocorrect="off"
+                                    spellcheck="false"
+
+                                    maxlength="100"
+                                    required
+
+                                    autofocus
+                                    aria-required="true"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PASSWORD FIELD -->
+                        <div class="field">
+
+                            <label
+                                class="field__label"
+                                for="password"
+                            >
+                                Password
+                            </label>
+
+
+                            <div class="field__control">
+
+                                <svg
+                                    class="icon field__icon"
+                                    aria-hidden="true"
+                                    focusable="false"
+                                >
+                                    <use href="#i-lock"></use>
+                                </svg>
+
+
+                                <input
+                                    class="field__input field__input--has-action"
+                                    type="password"
+                                    id="password"
+                                    name="password"
+
+                                    placeholder="Enter your password"
+
+                                    autocomplete="current-password"
+
+                                    maxlength="128"
+                                    required
+
+                                    aria-required="true"
+                                >
+
+
+                                <!-- PASSWORD VISIBILITY -->
+                                <button
+                                    class="field__toggle"
+                                    type="button"
+
+                                    aria-controls="password"
+                                    aria-pressed="false"
+                                    aria-label="Show password"
+
+                                    data-toggle-password
+                                >
+
+                                    <svg
+                                        class="icon icon-eye"
+                                        aria-hidden="true"
+                                        focusable="false"
+                                    >
+                                        <use href="#i-eye"></use>
+                                    </svg>
+
+
+                                    <svg
+                                        class="icon icon-eye-off"
+                                        aria-hidden="true"
+                                        focusable="false"
+                                    >
+                                        <use href="#i-eye-off"></use>
+                                    </svg>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SUBMIT BUTTON -->
+                        <button
+                            class="btn btn--primary"
+                            type="submit"
+                            data-loading-label="Signing in…"
+                        >
+
+                            <span
+                                class="btn__spinner"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span class="btn__label">
+                                Sign In
+                            </span>
+
+                        </button>
+
+                    </form>
+
+                </section>
+
+            </main>
+
+
+            <!-- FOOTER -->
+            <footer class="auth-footer">
+
+                <svg
+                    class="auth-footer__mark"
+                    width="20"
+                    height="20"
+                    aria-hidden="true"
+                    focusable="false"
+                >
+                    <use href="#i-mark"></use>
+                </svg>
+
+
+                <p>
+                    &copy;
+                    <span data-year>2026</span>
+                    ACTRACE. Every Activity Leaves a Trace.
+                </p>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOCAL JAVASCRIPT -->
+    <script
+        src="{{ url_for('static', filename='js/main.js') }}"
+        defer
+    ></script>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#142D4E">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <title>{% block title %}Student Dashboard{% endblock %} | ACTRACE</title>
+
+    <meta
+        name="description"
+        content="ACTRACE Student Activity Journal."
+    >
+
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="{{ url_for('static', filename='img/favicon.svg') }}"
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/student.css') }}"
+    >
+
+    {% block head %}{% endblock %}
+</head>
+
+<body class="student-body">
+
+    <a class="skip-link" href="#main-content">
+        Lewati navigasi
+    </a>
+
+    <!-- ICON SPRITE -->
+    <svg class="svg-sprite" aria-hidden="true"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <symbol id="icon-dashboard" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="8" height="8" rx="2"/>
+            <rect x="13" y="3" width="8" height="5" rx="2"/>
+            <rect x="13" y="10" width="8" height="11" rx="2"/>
+            <rect x="3" y="13" width="8" height="8" rx="2"/>
+        </symbol>
+
+        <symbol id="icon-journal" viewBox="0 0 24 24">
+            <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v18H7.5A2.5 2.5 0 0 1 5 17.5z"/>
+            <path d="M5 17.5A2.5 2.5 0 0 0 7.5 20M9 7h7M9 11h7"/>
+        </symbol>
+
+        <symbol id="icon-calendar" viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="16" rx="2"/>
+            <path d="M16 3v4M8 3v4M3 10h18"/>
+        </symbol>
+
+        <symbol id="icon-chart" viewBox="0 0 24 24">
+            <path d="M3 3v18h18"/>
+            <path d="m8 14 4-4 4 3 5-7"/>
+        </symbol>
+
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>
+        </symbol>
+
+        <symbol id="icon-settings" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="m19.4 15 .1.1a2 2 0 1 1-2.8 2.8l-.1-.1a2 2 0 0 0-3.4 1.4v.3a2 2 0 1 1-4 0v-.2a2 2 0 0 0-3.4-1.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a2 2 0 0 0-1.4-3.4h-.3a2 2 0 1 1 0-4h.2a2 2 0 0 0 1.4-3.4l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a2 2 0 0 0 3.4-1.4v-.3a2 2 0 1 1 4 0v.2a2 2 0 0 0 3.4 1.4l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a2 2 0 0 0 1.4 3.4h.3a2 2 0 1 1 0 4h-.2a2 2 0 0 0-1.4 3.4z"/>
+        </symbol>
+
+        <symbol id="icon-logout" viewBox="0 0 24 24">
+            <path d="M10 17l5-5-5-5M15 12H3"/>
+            <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
+        </symbol>
+
+        <symbol id="icon-book" viewBox="0 0 24 24">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </symbol>
+
+        <symbol id="icon-arrow" viewBox="0 0 24 24">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+        </symbol>
+
+        <symbol id="icon-clock" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+        </symbol>
+
+    </svg>
+
+
+    <div class="student-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar__top">
+
+                <a class="sidebar__brand"
+                   href="{{ url_for('student.dashboard') }}">
+
+                    <span class="brand-mark">
+                        <svg class="icon" aria-hidden="true">
+                            <use href="#icon-chart"></use>
+                        </svg>
+                    </span>
+
+                    <span class="brand-name">ACTRACE</span>
+
+                </a>
+
+
+                <div class="sidebar__divider"></div>
+
+
+                <p class="sidebar__label">WORKSPACE</p>
+
+                <nav class="sidebar__nav" aria-label="Navigasi utama">
+
+                    <a
+                        href="{{ url_for('student.dashboard') }}"
+                        class="nav-link {% if request.endpoint == 'student.dashboard' %}nav-link--active{% endif %}"
+                        {% if request.endpoint == 'student.dashboard' %}aria-current="page"{% endif %}
+                    >
+                        <svg class="icon" aria-hidden="true">
+                            <use href="#icon-dashboard"></use>
+                        </svg>
+
+                        <span>Dashboard</span>
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('student.journals') }}"
+                        class="nav-link {% if request.endpoint == 'student.journals' %}nav-link--active{% endif %}"
+                        {% if request.endpoint == 'student.journals' %}aria-current="page"{% endif %}
+                    >
+                        <svg class="icon" aria-hidden="true">
+                            <use href="#icon-journal"></use>
+                        </svg>
+
+                        <span>My Journals</span>
+                    </a>
+
+                </nav>
+
+
+                <p class="sidebar__label sidebar__label--second">
+                    PERSONAL
+                </p>
+
+                <div class="nav-link nav-link--disabled"
+                     aria-disabled="true"
+                     title="Fitur belum tersedia">
+
+                    <svg class="icon" aria-hidden="true">
+                        <use href="#icon-user"></use>
+                    </svg>
+
+                    <span>My Profile</span>
+                    <span class="nav-soon">Soon</span>
+                </div>
+
+
+                <div class="nav-link nav-link--disabled"
+                     aria-disabled="true"
+                     title="Fitur belum tersedia">
+
+                    <svg class="icon" aria-hidden="true">
+                        <use href="#icon-settings"></use>
+                    </svg>
+
+                    <span>Settings</span>
+                    <span class="nav-soon">Soon</span>
+                </div>
+
+            </div>
+
+
+            <!-- SIDEBAR BOTTOM -->
+            <div class="sidebar__bottom">
+
+                <div class="sidebar__user">
+
+                    <div class="user-avatar">
+                        {{ session.get('full_name', 'S')[0]|upper }}
+                    </div>
+
+                    <div class="sidebar__user-info">
+                        <strong>
+                            {{ session.get('full_name', 'Student') }}
+                        </strong>
+
+                        <span>Student Account</span>
+                    </div>
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for('auth.logout') }}"
+                    class="logout-form"
+                >
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+                    <button type="submit" class="logout-button">
+
+                        <svg class="icon" aria-hidden="true">
+                            <use href="#icon-logout"></use>
+                        </svg>
+
+                        <span>Sign Out</span>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN AREA -->
+        <div class="student-main">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+
+                <div class="topbar__left">
+
+                    <button
+                        class="mobile-menu"
+                        id="mobile-menu"
+                        type="button"
+                        aria-label="Buka navigasi"
+                        aria-controls="sidebar"
+                        aria-expanded="false"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <div>
+                        <span class="topbar__eyebrow">STUDENT PORTAL</span>
+                        <p class="topbar__title">ACTRACE Workspace</p>
+                    </div>
+
+                </div>
+
+
+                <div class="topbar__right">
+
+                    <div class="topbar__status">
+                        <span class="status-dot"></span>
+                        <span>Personal Workspace</span>
+                    </div>
+
+                    <div class="topbar__avatar">
+                        {{ session.get('full_name', 'S')[0]|upper }}
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE CONTENT -->
+            <main class="page-content" id="main-content">
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="dashboard-alerts"
+                             role="status"
+                             aria-live="polite">
+
+                            {% for category, message in messages %}
+                                <div class="dashboard-alert dashboard-alert--{{ category if category in ('success', 'error') else 'info' }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {% block content %}{% endblock %}
+
+            </main>
+
+
+            <!-- FOOTER -->
+            <footer class="student-footer">
+                <span>© <span data-year></span> ACTRACE</span>
+                <span>Every Activity Leaves a Trace.</span>
+            </footer>
+
+        </div>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/main.js') }}"
+        defer
+    ></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuButton = document.getElementById("mobile-menu");
+            const sidebar = document.getElementById("sidebar");
+
+            if (!menuButton || !sidebar) return;
+
+            menuButton.addEventListener("click", function () {
+                const isOpen = sidebar.classList.toggle("sidebar--open");
+
+                menuButton.setAttribute(
+                    "aria-expanded",
+                    String(isOpen)
+                );
+            });
+
+            document.addEventListener("click", function (event) {
+                if (
+                    !sidebar.contains(event.target) &&
+                    !menuButton.contains(event.target)
+                ) {
+                    sidebar.classList.remove("sidebar--open");
+                    menuButton.setAttribute("aria-expanded", "false");
+                }
+            });
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

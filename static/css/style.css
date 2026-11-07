@@ -1,0 +1,130 @@
+/* ==========================================================================
+   ACTRACE | style.css
+   Gaya global bersama: design token, reset, tipografi, utilitas.
+   ========================================================================== */
+
+:root {
+  /* Palet resmi */
+  --color-navy: #142D4E;
+  --color-navy-dark: #0E2240;
+  --color-teal: #247C83;
+  --color-teal-dark: #1C666C;
+  --color-bg: #F4F7FA;
+  --color-surface: #FFFFFF;
+  --color-amber: #E8A64A;
+  --color-text: #172B3A;
+  --color-text-muted: #64748B;
+  --color-border: #E2E8F0;
+
+  /* Turunan fungsional (di luar palet inti) */
+  --color-border-input: #CBD5E1;
+  --color-placeholder: #7C8BA0;
+  --color-danger: #9B2C2C;
+  --color-danger-bg: #FDF2F2;
+  --color-danger-border: #F2C4C4;
+  --color-success: #1F6B4A;
+  --color-success-bg: #F0F8F4;
+  --color-success-border: #BFE0CF;
+
+  /* Tipografi */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Bentuk */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 1px 2px rgba(20, 45, 78, 0.05), 0 12px 32px rgba(20, 45, 78, 0.07);
+  --focus-ring: 0 0 0 3px rgba(36, 124, 131, 0.22);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+}
+
+/* Utilitas */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.svg-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
